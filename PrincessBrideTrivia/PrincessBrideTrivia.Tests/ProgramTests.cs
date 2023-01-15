@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.IO;
 
 namespace PrincessBrideTrivia.Tests
@@ -60,7 +61,7 @@ namespace PrincessBrideTrivia.Tests
         [DataRow(5, 10, "50%")]
         [DataRow(1, 10, "10%")]
         [DataRow(0, 10, "0%")]
-        public void GetPercentCorrect_ReturnsExpectedPercentage(int numberOfCorrectGuesses, 
+        public void GetPercentCorrect_ReturnsExpectedPercentage(int numberOfCorrectGuesses,
             int numberOfQuestions, string expectedString)
         {
             // Arrange
@@ -85,6 +86,24 @@ namespace PrincessBrideTrivia.Tests
                 lines[4] = "2";
                 File.AppendAllLines(filePath, lines);
             }
+        }
+
+        // EXTRA CREDIT ATTEMPT
+        [TestMethod]
+        [DataRow("1", true)]
+        [DataRow("2", true)]
+        [DataRow("3", true)]
+        [DataRow("4", false)]
+        [DataRow("A", false)]
+        public void CheckGuess_ReturnsTrue(string guess, bool check)
+        {
+            // Arrange
+
+            // Act
+            bool allowed = Program.CheckGuess(guess);
+
+            // Assert
+            Assert.AreEqual(allowed, check);
         }
     }
 }
