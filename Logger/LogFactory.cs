@@ -1,11 +1,27 @@
-﻿namespace Logger
+﻿using System;
+
+namespace Logger;
+
+public class LogFactory
 {
-    public class LogFactory
+    public string? FileLoggerPath { get; private set; }
+
+    public void ConfigureFileLogger(string filePath)
     {
-        public BaseLogger CreateLogger(string className)
+        FileLoggerPath = filePath;
+    }
+
+    public BaseLogger CreateLogger(string className)
+    {
+        switch (className)
         {
-            
-            return null;
+            case "FileLogger":
+                if (FileLoggerPath is null) { return null!; }
+                FileLogger fileLogger = new(filePath: FileLoggerPath)
+                {ClassName = className};
+                return fileLogger;
+            default:
+                throw new ArgumentException("Invalid class name in FileLogger");
         }
     }
 }
